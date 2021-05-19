@@ -3,28 +3,23 @@ package com.pijupiju.screamingsun;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = MainActivity.class.getName();
-    Vibrator vibrator;
-    Button btnVibrate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Calendar rightNow = Calendar.getInstance();
-        int hour = rightNow.get(Calendar.HOUR);
-
-        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-        btnVibrate = findViewById(R.id.btnVibrate);
-        btnVibrate.setOnClickListener(view -> {
+        int hour = Calendar.getInstance().get(Calendar.HOUR);
+        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        ConstraintLayout constraintLayout = findViewById(R.id.cl);
+        constraintLayout.setOnClickListener(v -> {
             if (hour < 5 || hour > 7) {
                 vibrator.vibrate(VibrationEffect.createOneShot(5, VibrationEffect.DEFAULT_AMPLITUDE));
             } else if (hour == 5) {
