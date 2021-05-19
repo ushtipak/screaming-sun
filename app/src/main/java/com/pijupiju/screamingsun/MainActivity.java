@@ -14,12 +14,8 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getName();
-    Button btn1;
-    Button btn2;
-    Button btn3;
-    Button btn4;
-    Button btn5;
     Vibrator vibrator;
+    Button btnVibrate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,22 +27,23 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "current hour: " + hour);
 
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-        btn1 = findViewById(R.id.btn1);
-        btn2 = findViewById(R.id.btn2);
-        btn3 = findViewById(R.id.btn3);
-        btn4 = findViewById(R.id.btn4);
-        btn5 = findViewById(R.id.btn5);
+        btnVibrate = findViewById(R.id.btnVibrate);
 
         Handler handler = new Handler(Looper.getMainLooper());
-        btn1.setOnClickListener(view -> {
-            handler.postDelayed(() -> vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE)), 200);
-            handler.postDelayed(() -> vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE)), 500);
-            handler.postDelayed(() -> vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE)), 1000);
-        });
+        btnVibrate.setOnClickListener(view -> {
 
-        btn2.setOnClickListener(view -> vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE)));
-        btn3.setOnClickListener(view -> vibrator.vibrate(VibrationEffect.createOneShot(300, VibrationEffect.DEFAULT_AMPLITUDE)));
-        btn4.setOnClickListener(view -> vibrator.vibrate(VibrationEffect.createOneShot(400, VibrationEffect.DEFAULT_AMPLITUDE)));
-        btn5.setOnClickListener(view -> vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE)));
+            if (hour < 5 || hour > 7) {
+                vibrator.vibrate(VibrationEffect.createOneShot(5, VibrationEffect.DEFAULT_AMPLITUDE));
+            } else if (hour == 5) {
+                vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE));
+            } else if (hour == 6) {
+                handler.postDelayed(() -> vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE)), 200);
+                handler.postDelayed(() -> vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE)), 600);
+            } else {
+                handler.postDelayed(() -> vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE)), 200);
+                handler.postDelayed(() -> vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE)), 600);
+                handler.postDelayed(() -> vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE)), 1000);
+            }
+        });
     }
 }
