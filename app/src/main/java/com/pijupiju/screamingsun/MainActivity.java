@@ -15,20 +15,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        int hour = Calendar.getInstance().get(Calendar.HOUR);
-        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         ConstraintLayout constraintLayout = findViewById(R.id.cl);
         constraintLayout.setOnClickListener(v -> {
-            if (hour < 5 || hour > 7) {
-                vibrator.vibrate(VibrationEffect.createOneShot(5, VibrationEffect.DEFAULT_AMPLITUDE));
-            } else if (hour == 5) {
-                vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE));
-            } else if (hour == 6) {
-                vibrator.vibrate(VibrationEffect.createWaveform(new long[]{0, 200, 100, 200}, -1));
-            } else {
-                vibrator.vibrate(VibrationEffect.createWaveform(new long[]{0, 200, 100, 200, 100, 200}, -1));
-            }
+            vibe();
         });
+    }
+
+    private void vibe() {
+        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        int hour = Calendar.getInstance().get(Calendar.HOUR);
+        if (hour < 5 || hour > 7) {
+            vibrator.vibrate(VibrationEffect.createOneShot(5, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else if (hour == 5) {
+            vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else if (hour == 6) {
+            vibrator.vibrate(VibrationEffect.createWaveform(new long[]{0, 200, 100, 200}, -1));
+        } else {
+            vibrator.vibrate(VibrationEffect.createWaveform(new long[]{0, 200, 100, 200, 100, 200}, -1));
+        }
     }
 }
